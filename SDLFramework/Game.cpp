@@ -18,7 +18,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
 			if (m_pRenderer != 0)
 			{
 				std::cout << "Renderer creation success\n";
-				SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+				SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
 			} else {
 				std::cout << "Renderer init fail\n";
 				return false;
@@ -35,6 +35,22 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, bo
 	std::cout << "Init success\n";
 	m_bRunning = true; // if everithing is ok start the game loop!
 
+	SDL_Surface* pTempSurface = SDL_LoadBMP("assets/animation.bmp");
+	if (pTempSurface == NULL)
+		std::cout << "Can't load the BMP file, check the file path or the image extension!";
+	m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
+	SDL_FreeSurface(pTempSurface);
+
+	//SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
+	// std::cout << m_sourceRectangle.h ;
+	m_sourceRectangle.w = 128;
+	m_sourceRectangle.h = 80;
+
+	m_destinationRectangle.x = m_sourceRectangle.x = 0;
+	m_destinationRectangle.y = m_sourceRectangle.y = 0;
+	m_destinationRectangle.w = m_sourceRectangle.w;
+	m_destinationRectangle.h = m_sourceRectangle.h;
+
 	return true;
 }
 
@@ -42,6 +58,9 @@ void Game::render()
 {
 	// clear the buffer to draw the color
 	SDL_RenderClear(m_pRenderer);
+
+	// here in the middle i can apply textures
+	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
 
 	// draw everything on the screen
 	SDL_RenderPresent(m_pRenderer);
@@ -70,4 +89,9 @@ void Game::handleEvents()
 			break;
 		}
 	}
+}
+
+void Game::update()
+{
+	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 }
