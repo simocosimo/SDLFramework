@@ -1,37 +1,24 @@
-#include <SDL.h>
+#include "Game.h"
+#include <Windows.h>
 
-// I'm adding more comments to try the commit from the laptop!
-
-SDL_Window* g_pWindow = 0;
-SDL_Renderer* g_pRenderer = 0;
+Game* g_game = 0;
 
 int main(int argc, char **argv)
 {
-	//initialize SDL
-	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
+	AllocConsole();
+	freopen("CON", "w", stdout);
+
+	g_game = new Game();
+
+	g_game->init("Chapter 1", 100, 100, 640, 480, 0);
+
+	while (g_game->running())
 	{
-		// if success to create the window
-		g_pWindow = SDL_CreateWindow("Chapter 1: Setting Up SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
-		if (g_pWindow != 0)
-		{
-			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
-		}
-	} else {
-		return 1; // SDL could not initialize
+		g_game->handleEvents();
+		//g_game->update();
+		g_game->render();
 	}
 
-	// Everything succeeded lets draw the window
-	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
-	SDL_RenderClear(g_pRenderer);
-
-	// display the window
-	SDL_RenderPresent(g_pRenderer);
-
-	// set a delay before quitting
-	SDL_Delay(5000);
-
-	// Quit SDL
-	SDL_Quit();
-
+	g_game->clean();
 	return 0;
 }
