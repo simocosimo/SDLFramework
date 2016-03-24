@@ -4,7 +4,9 @@
 #define __Game__
 
 #include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
+#include "TextureManager.h"
 
 class Game
 {
@@ -29,10 +31,9 @@ private:
 	SDL_Renderer* m_pRenderer = 0;
 	bool m_bRunning;
 
-	// variables for the textures
-	SDL_Texture* m_pTexture;
-	SDL_Rect m_sourceRectangle;
-	SDL_Rect m_destinationRectangle;
+	// variables for texturing and animations
+	int m_currentFrame;
+
 };
 
 
