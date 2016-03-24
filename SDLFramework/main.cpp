@@ -1,5 +1,7 @@
 #include <SDL.h>
 
+// I'm adding more comments to try the commit from the laptop!
+
 SDL_Window* g_pWindow = 0;
 SDL_Renderer* g_pRenderer = 0;
 
