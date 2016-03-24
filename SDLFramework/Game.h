@@ -13,7 +13,8 @@ public:
 	Game() {}
 	~Game() {}
 
-	bool init(const char* title, int xpos, int ypos, int height, int width, int flag);
+	// TODO: better implementation for different flags, not just for fullscreen
+	bool init(const char* title, int xpos, int ypos, int height, int width, bool fullscreen);
 
 	void render();
 	//void update();
