@@ -6,7 +6,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include <vector>
 #include "TextureManager.h"
+#include "Player.h"
+#include "Enemy.h"
 
 class Game
 {
@@ -33,6 +36,12 @@ private:
 
 	// variables for texturing and animations
 	int m_currentFrame;
+
+	// GameObjects
+	GameObject* m_go;
+	GameObject* m_player;
+	GameObject* m_enemy;
+	std::vector<GameObject*> m_gameObjects;
 
 };
 
